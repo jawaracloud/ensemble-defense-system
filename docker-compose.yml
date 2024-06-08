@@ -16,7 +16,7 @@ services:
       - ./services/suricata/config/enable.conf:/etc/suricata/enable.conf:rw
       - ./services/suricata/config/disable.conf:/etc/suricata/disable.conf:rw
       - ./services/suricata/config/suricata.yaml:/etc/suricata/suricata.yaml:rw
-      - ./services/suricata/rules:/etc/suricata/rules:ro
+      - ./services/suricata/rules:/etc/suricata/rules
       - ${IDS_LOG_DIR}/suricata:/var/log/suricata:rw
       - ${IDS_LOG_DIR}/suricata:/home/suricata
       - ./services/suricata/dataset:/home/dataset
