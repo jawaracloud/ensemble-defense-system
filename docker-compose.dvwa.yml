@@ -5,7 +5,7 @@ services:
     container_name: dvwa
     restart: always
     ports:
-      - "8080:80"
+      - "80:80"
     networks:
       - dvwa
     depends_on:
