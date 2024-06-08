@@ -26,7 +26,7 @@ redef digest_salt = "Qm9zaUJyb01vbmV5VGFja3MyMDE5NTQ=";
 # Detect traceroute being run on the network. This could possibly cause
 # performance trouble when there are a lot of traceroutes on your network.
 # Enable cautiously.
-#@load misc/detect-traceroute
+@load misc/detect-traceroute
 
 # Generate notices when vulnerable versions of software are discovered.
 # The default is to only monitor software found in the address space defined
@@ -47,7 +47,7 @@ redef digest_salt = "Qm9zaUJyb01vbmV5VGFja3MyMDE5NTQ=";
 @load protocols/http/software
 # The detect-webapps script could possibly cause performance trouble when
 # running on live traffic.  Enable it cautiously.
-#@load protocols/http/detect-webapps
+@load protocols/http/detect-webapps
 
 # This script detects DNS results pointing toward your Site::local_nets
 # where the name is not part of your local DNS zone and is being hosted

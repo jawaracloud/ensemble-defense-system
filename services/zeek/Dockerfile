@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 
 # Install Zeek packages: ja3 and hassh
 WORKDIR /usr/local/zeek
-RUN ./bin/zkg install --force ja3 hassh 
+RUN ./bin/zkg install --force ja3 hassh ncsa/bro-simple-scan
 
 # Create a group and Zeek user with specific UID and GID
 RUN groupadd -g 1000 zeek && \
