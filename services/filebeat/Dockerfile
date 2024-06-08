@@ -1,13 +1,19 @@
 FROM docker.elastic.co/beats/filebeat:7.17.21
 
+# Set build argument for the directory
+ARG DIR
+
 # Copy the filebeat.yml file to the conf.d directory
-COPY services/filebeat/filebeat.yml /usr/share/filebeat/filebeat.yml
-COPY services/filebeat/modules.d /usr/share/filebeat/modules.d/
+COPY ${DIR}/services/filebeat/filebeat.yml /usr/share/filebeat/filebeat.yml
+COPY ${DIR}/services/filebeat/modules.d /usr/share/filebeat/modules.d/
+
+# Debug step: List files to ensure the correct paths
+RUN ls -l /usr/share/filebeat/
 
 # Set the ownership and permissions of the filebeat.yml file
-RUN sudo chown root:root /usr/share/filebeat/filebeat.yml
-RUN sudo chown -R root:root /usr/share/filebeat/modules.d/
+RUN chown root:root /usr/share/filebeat/filebeat.yml
+RUN chown -R root:root /usr/share/filebeat/modules.d/
 
 # Set the ownership and permissions of the modules.d directory
-RUN sudo chmod go-w /usr/share/filebeat/filebeat.yml
-RUN sudo chmod -R go-w /usr/share/filebeat/modules.d/
+RUN chmod go-w /usr/share/filebeat/filebeat.yml
+RUN chmod -R go-w /usr/share/filebeat/modules.d/
