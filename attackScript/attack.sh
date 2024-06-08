@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Check if the user is root
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+fi
 echo "Available Attack Options:"
 echo "PORT SCANNING:"
 echo "	1. NMAP"
