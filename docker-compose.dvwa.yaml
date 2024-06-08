@@ -1,0 +1,47 @@
+version: "3.8"
+services:
+  dvwa:
+    image: vulnerables/web-dvwa
+    container_name: dvwa
+    ports:
+      - "8080:80"
+    networks:
+      - dvwa
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_DATABASE: dvwa
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: dvwa
+      MYSQL_ROOT_PASSWORD: dvwa
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/setup.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    networks:
+      - dvwa
+    environment:
+      MYSQL_DATABASE: dvwa
+      MYSQL_USER: dvwa
+      MYSQL_PASSWORD: dvwa
+      MYSQL_ROOT_PASSWORD: dvwa
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - mysql:/var/lib/mysql
+
+networks:
+  dvwa:
+    name: dvwa
+    driver: bridge
+volumes:
+  mysql:
+    name: mysql
+    driver: local

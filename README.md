@@ -14,11 +14,16 @@ The Ensemble Defense System (EDS) is a powerful cybersecurity framework designed
 
 ## Installation
 
-1. **Clone the Repository**: 
+1. **Clone the Repository**:
 
    First, clone the repository to your local machine using the following command:
    ```
    git clone https://github.com/sarahalh/EDS.git
+   ```
+
+2. Copy the `.env.example` file to `.env`:
+   ```
+   cp .env.example .env
    ```
 
 3. **Navigate to the Project Directory**:
@@ -30,13 +35,13 @@ The Ensemble Defense System (EDS) is a powerful cybersecurity framework designed
 
 4. **Configure Environment Variables**:
 
-   Edit the `enVariable.env` file in the project directory and set the appropriate parameters based on your environment.
+   Edit the `.env` file in the project directory and set the appropriate parameters based on your environment.
 
 5. **Build and Start the Containers**:
 
-   Run the following command to start the Docker containers, passing the environment variables from the `enVariable.env` file:
+   Run the following command to start the Docker containers, passing the environment variables from the `.env` file:
    ```
-   docker-compose --env-file enVariable.env up --build
+   docker-compose --env-file .env up --build
    ```
    This will build and start the required Docker containers with the provided environment variables.
 
@@ -92,4 +97,3 @@ The Zeek Logs Page:
 <div align="left">
    <img width="666" src="Screenshots/ZeekPage.png">
 </div>
-
