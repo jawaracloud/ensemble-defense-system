@@ -3,6 +3,7 @@ services:
   dvwa:
     image: vulnerables/web-dvwa
     container_name: dvwa
+    restart: always
     ports:
       - "8080:80"
     networks:
@@ -22,6 +23,7 @@ services:
   mysql:
     image: mysql:5.7
     container_name: mysql
+    restart: always
     networks:
       - dvwa
     environment:
