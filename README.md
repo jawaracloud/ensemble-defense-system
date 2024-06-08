@@ -8,11 +8,20 @@ The Ensemble Defense System (EDS) is a powerful cybersecurity framework designed
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Description](#description)
+- [Table of Contents](#table-of-contents)
+- [Installation DVWA](#installation-dvwa)
+- [Installation EDS](#installation-eds)
 - [Features](#features)
 - [Screenshots](#screenshots)
 
-## Installation
+## Installation DVWA
+DVWA is a vulnerable web application that is used to demonstrate common web application vulnerabilities. To install DVWA, follow the steps below:
+```bash
+docker-compose -f docker-compose.dvwa.yaml up -d
+```
+
+## Installation EDS
 
 1. **Clone the Repository**:
 
