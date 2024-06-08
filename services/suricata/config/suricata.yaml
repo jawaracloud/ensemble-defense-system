@@ -68,10 +68,13 @@ outputs:
 default-rule-path: /etc/suricata/rules/
 
 rule-files:
-  - suricata.rules
   - ddos.rules
-  - sqli.rules
+  - hping.rules
+  - nikto.rules
   - nmap.rules
+  - sqli.rules
+  - sqlmap.rules
+  - suricata.rules
   - xss.rules
 
 classification-file: /etc/suricata/classification.config

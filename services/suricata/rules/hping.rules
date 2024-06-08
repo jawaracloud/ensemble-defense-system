@@ -1,0 +1,8 @@
+alert tcp any any -> any any (msg:"Hping scan detected (SYN+FIN flags)"; flags:S,F; classtype:attempted-recon; sid:1002001;)
+
+alert ip any any -> any any (msg:"Hping scan detected (Incremental TTL)"; ttl:>1; flow:stateless; classtype:attempted-recon; sid:1002002;)
+
+alert icmp any any -> any any (msg:"Hping scan detected (ICMP)"; itype:8; content:"HPING"; depth:5; classtype:attempted-recon; sid:1002003;)
+
+alert tcp any any -> any any (msg:"Hping flooding attack detected (High volume)"; flags:S; threshold:type threshold, track by_src, count 50, seconds 1; classtype:attempted-dos; sid:1002004;)
+alert icmp any any -> any any (msg:"Hping flooding attack detected (High volume ICMP)"; itype:8; threshold:type threshold, track by_src, count 50, seconds 1; classtype:attempted-dos; sid:1002005;)

@@ -10,47 +10,61 @@ The Ensemble Defense System (EDS) is a powerful cybersecurity framework designed
 
 - [Description](#description)
 - [Table of Contents](#table-of-contents)
+- [Initial Setup](#initial-setup)
 - [Installation DVWA](#installation-dvwa)
 - [Installation EDS](#installation-eds)
+- [Easy Installation](#easy-installation)
 - [Features](#features)
 - [Screenshots](#screenshots)
+
+## Initial Setup
+You must have the following prerequisites installed on your machine before running the Ensemble Defense System:
+```bash
+chmod +x init.sh
+./init.sh
+```
 
 ## Installation DVWA
 DVWA is a vulnerable web application that is used to demonstrate common web application vulnerabilities. To install DVWA, follow the steps below:
 ```bash
+docker compose -f docker-compose.dvwa.yaml up -d
+# OR
 docker-compose -f docker-compose.dvwa.yaml up -d
 ```
 
 ## Installation EDS
-
+To install the Ensemble Defense System, follow the steps below:
 1. **Clone the Repository**:
 
    First, clone the repository to your local machine using the following command:
    ```
    git clone https://github.com/jawaracloud/ensemble-defense-system.git
    ```
+   This will create a new directory called `ensemble-defense-system` in your current working directory.
 
-2. Copy the `.env.example` file to `.env`:
+2. **Navigate to the Project Directory**:
+
+  Change your working directory to the project folder:
+  ```bash
+  cd ensemble-defense-system/
+  ```
+
+3. Copy the `.env.example` file to `.env`
    ```
    cp .env.example .env
    ```
 
-3. **Navigate to the Project Directory**:
-
-   Change your working directory to the project folder:
-   ```
-   cd EDS
-   ```
-
 4. **Configure Environment Variables**:
 
-   Edit the `.env` file in the project directory and set the appropriate parameters based on your environment.
+   Edit the `.env` file in the project directory and set the appropriate parameters based on your environment. Edit the environment variables `INTERFACE` as the name of the interface you want to monitor and the IP address of the interface you want to monitor.
 
 5. **Build and Start the Containers**:
 
    Run the following command to start the Docker containers, passing the environment variables from the `.env` file:
-   ```
-   docker-compose --env-file .env up --build
+   ```bash
+   docker compose -f docker-compose.yml --env-file .env up -d --build
+   # OR
+   docker-compose -f docker-compose.yml --env-file .env up -d --build
    ```
    This will build and start the required Docker containers with the provided environment variables.
 
@@ -60,6 +74,13 @@ docker-compose -f docker-compose.dvwa.yaml up -d
    http://localhost:5601/
    ```
    This URL should allow you to access the Kibana web interface, where you can interact with the system.
+
+## Easy Installation
+To simplify the installation process, we have provided a script that automates the installation of the Ensemble Defense System. To use the script, follow the steps below:
+```bash
+chmod +x start.sh
+./start.sh
+```
 
 ## Features
 

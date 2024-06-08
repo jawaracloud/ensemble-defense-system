@@ -1,0 +1,10 @@
+alert http any any -> any any (msg:"SQLMap User-Agent detected"; flow:established,to_server; content:"sqlmap"; http_header; nocase; classtype:web-application-attack; sid:1000001;)
+
+alert http any any -> any any (msg:"SQLMap payload detected in URI"; flow:established,to_server; content:"sqlmap"; http_uri; nocase; classtype:web-application-attack; sid:1000002;)
+alert http any any -> any any (msg:"SQLMap payload detected in POST data"; flow:established,to_server; content:"sqlmap"; http_client_body; nocase; classtype:web-application-attack; sid:1000003;)
+
+alert http any any -> any any (msg:"SQLMap error-based SQL injection detected"; flow:established,to_server; content:"You have an error in your SQL syntax"; http_client_body; nocase; classtype:web-application-attack; sid:1000004;)
+alert http any any -> any any (msg:"SQLMap error-based SQL injection detected"; flow:established,to_server; content:"SQL syntax"; http_client_body; nocase; classtype:web-application-attack; sid:1000005;)
+
+alert http any any -> any any (msg:"SQLMap timing attack detected in URI"; flow:established,to_server; content:"if(now()"; http_uri; nocase; classtype:web-application-attack; sid:1000006;)
+alert http any any -> any any (msg:"SQLMap timing attack detected in POST data"; flow:established,to_server; content:"if(now()"; http_client_body; nocase; classtype:web-application-attack; sid:1000007;)
