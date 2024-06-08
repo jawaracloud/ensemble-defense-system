@@ -1,0 +1,8 @@
+server.host: "0.0.0.0"
+elasticsearch.hosts: ["http://elasticsearch:9200"]
+xpack.security.encryptionKey: "nHoQLTaJJXCHLSz+E+VyV0bDZ5ssCh+1B9UogqOSt1A="
+xpack.encryptedSavedObjects.encryptionKey: "4eV8wUeZ9H2PTFjVc/Blx9GtKxLfJDFbB1h1LXJjQIE="
+#xpack.reporting.encryptionKey: "dGhpcyBpcyBhIHNlY3VyZSBzYW1wbGUgZW5jcnlwdGlvbiBrZXk="
+#elasticsearch.username: "kibana_system"
+#elasticsearch.password: "Mtech"
+

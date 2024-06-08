@@ -1,0 +1,3 @@
+alert http any any -> any any (msg:"HTTP traffic detected"; sid:1;)
+alert tcp any any -> any any (msg:"TCP traffic detected"; sid:2;)
+alert udp any any -> any any (msg:"UDP traffic detected"; sid:3;)

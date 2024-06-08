@@ -1,0 +1,155 @@
+version: "2.2"
+services:
+  #######################################################
+  #  SURICATA
+  #######################################################
+  suricata:
+    build:
+      context: ./services
+      dockerfile: ./suricata/Dockerfile
+    container_name: suricata
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+    volumes:
+      - ./services/suricata/config/enable.conf:/etc/suricata/enable.conf:rw
+      - ./services/suricata/config/disable.conf:/etc/suricata/disable.conf:rw
+      - ./services/suricata/config/suricata.yaml:/etc/suricata/suricata.yaml:rw
+      - ${IDS_LOG_DIR}/suricata:/var/log/suricata:rw
+      - ${IDS_LOG_DIR}/suricata:/home/suricata
+      - ./services/suricata/dataset:/home/dataset
+    environment:
+      - SURICATA_OPTIONS=-i ${INTERFACE} --set vars.address-groups.HOME_NET=[192.168.0.0/16,10.0.0.0/8]
+      - PGID=${GID:-1000}
+      - PUID=${UID:-1000}
+    network_mode: host
+
+  #######################################################
+  #  ZEEK
+  #######################################################
+  zeek:
+    build:
+      context: ./services
+      dockerfile: ./zeek/Dockerfile
+    container_name: zeek
+    command: -i ${INTERFACE}
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ${IDS_LOG_DIR}/zeek:/var/log/zeek:rw
+      - ./services/zeek/config/local.zeek:/usr/local/zeek/share/zeek/site/local.zeek:ro
+    environment:
+      - TRUSTED_NET=["192.168.0.0/16","10.0.0.0/8", "172.16.0.0/12"]
+      - PGID=${GID:-1000}
+      - PUID=${UID:-1000}
+    network_mode: host
+
+  #######################################################
+  #  SLIPS
+  #######################################################
+  slips:
+    image: stratosphereips/slips:latest
+    container_name: slips
+    stdin_open: true
+    tty: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_NICE
+    volumes:
+      - ./services/slips/config/slips.conf:/StratosphereLinuxIPS/slips.conf:rw
+      - ./services/slips/dataset:/StratosphereLinuxIPS/dataset/
+      - ${IDS_LOG_DIR}/slips:/StratosphereLinuxIPS/output/:rw
+    network_mode: host
+    entrypoint:
+      [
+        "bash",
+        "-c",
+        "redis-server --daemonize yes && python3 ./slips.py -i ${INTERFACE}",
+      ]
+
+  #######################################################
+  #  Filebeat
+  #######################################################
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.17.21
+    container_name: filebeat
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTICSEARCH_PASSWORD=Secure1234
+      - LOG_DIR=/var/log/ids
+      - TRUSTED_NET=["192.168.0.0/16","10.0.0.0/8","172.16.0.0/12"]
+    volumes:
+      - ./services/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./services/filebeat/modules.d/:/usr/share/filebeat/modules.d/:ro
+      - ./services/filebeat/kibana/:/usr/share/filebeat/kibana/:ro
+      - ${IDS_LOG_DIR}/:/var/log/ids/:z
+    networks:
+      - elk
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "filebeat test config -c /usr/share/filebeat/filebeat.yml",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      - elasticsearch
+      - kibana
+      - suricata
+      - zeek
+      - slips
+  #######################################################
+  #  Elassticksearch
+  #######################################################
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.21
+    container_name: elasticsearch
+    volumes:
+      - elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      - ES_JAVA_OPTS=-Xmx512m -Xms512m
+      - ELASTICSEARCH_USERNAME=userdvs
+      - ELASTIC_PASSWORD=Secure1234
+      - XPACK_SECURITY_ENABLED=true
+      - discovery.type=single-node
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - elk
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.21
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_USERNAME=userdvs
+      - ELASTICSEARCH_PASSWORD=Secure1234
+      - XPACK_SECURITY_ENABLED=true
+      - LOGGING_QUIET=true
+    volumes:
+      - ./services/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - 5601:5601
+    networks:
+      - elk
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5601"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    depends_on:
+      - elasticsearch
+
+networks:
+  elk:
+    name: elk
+    driver: bridge
+
+volumes:
+  elasticsearch:
+    driver: local
+

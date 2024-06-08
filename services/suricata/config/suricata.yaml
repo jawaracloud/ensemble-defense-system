@@ -1,0 +1,73 @@
+%YAML 1.1
+---
+vars:
+  address-groups:
+    HOME_NET: "[192.168.0.0/16, 10.0.0.0/8]"
+    EXTERNAL_NET: "!$HOME_NET"
+    DNS_SERVERS: "[8.8.8.8]"
+    SMTP_SERVERS: "[192.168.1.100]"
+    HTTP_SERVERS: "[192.168.1.101]"
+    SQL_SERVERS: "[192.168.1.102]"
+    TELNET_SERVERS: "[192.168.1.103]"
+    SSH_SERVERS: "[192.168.1.104]"
+    SIP_SERVERS: "[]"
+    ORACLE_PORTS: "[]"
+
+  port-groups:
+    FILE_DATA_PORTS: "[80,110,143]"
+    HTTP_PORTS: "[80]"
+    SIP_PORTS: "[5060, 5061, 5062]"
+    SSH_PORTS: "[22]"
+    FTP_PORTS: "[21]"
+    SHELLCODE_PORTS: "[21,22,23,25,80,110,143]"
+
+default-log-dir: /var/log/suricata/
+
+stats:
+  enabled: yes
+  interval: 8
+
+outputs:
+  - console:
+      enabled: yes
+      message: "Suricata logs: "
+
+  - file:
+      enabled: yes
+      filename: suricata.log
+      append: yes
+
+  - eve-log:
+      enabled: yes
+      filetype: regular
+      filename: eve.json
+      types:
+        - alert:
+            payload: yes
+            payload-printable: yes
+            packet: yes
+            http:
+              extended: yes
+
+        - http:
+            extended: yes
+
+        - dns:
+            query: yes
+            answer: yes
+            authority: yes
+            additional: yes
+
+        - tls:
+            extended: yes
+
+        - files:
+            force-magic: yes
+            force-hash: [md5, sha1, sha256]
+
+rule-files:
+  - /etc/suricata/rules/suricata.rules
+
+classification-file: /etc/suricata/classification.config
+reference-config-file: /etc/suricata/reference.config
+threshold-file: /etc/suricata/threshold.config

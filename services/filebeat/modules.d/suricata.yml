@@ -1,0 +1,5 @@
+- module: suricata
+  eve:
+    enabled: true
+    var.paths: ["${LOG_DIR}/suricata/eve.json"]
+    var.internal_networks: "${TRUSTED_NET}"

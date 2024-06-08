@@ -1,0 +1,39 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/ids/slips/*/alerts.json
+  tags: ["slips"]
+  input_type: log
+  json.keys_under_root: true
+  json.add_error_key: true
+
+- type: log
+  enabled: true
+  paths:
+    - /var/log/ids/slips/*/zeek_files/*
+  tags: ["zeek_files"]
+  input_type: log
+  json.keys_under_root: true
+  json.add_error_key: true
+  
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+    
+# ================================= Dashboards =================================
+# These settings control loading the sample dashboards to the Kibana index. Loading
+# the dashboards is disabled by default and can be enabled either by setting the
+# options here or by using the `setup` command.
+setup:
+  kibana:
+    host: "elasticsearch:5601"
+    username: "userdvs"
+    password: "Secure1234"
+    
+# ================================= Processors =================================
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+  username: "userdvs"
+  password: "Secure1234"
