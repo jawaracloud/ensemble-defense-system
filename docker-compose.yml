@@ -78,8 +78,6 @@ services:
     build:
       context: ./services
       dockerfile: ./filebeat/Dockerfile
-      args:
-        - DIR=.
     container_name: filebeat
     restart: always
     environment:

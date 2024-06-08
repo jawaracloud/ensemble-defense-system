@@ -1,11 +1,10 @@
 FROM docker.elastic.co/beats/filebeat:7.17.21
 
 # Set build argument for the directory
-ARG DIR
 
 # Copy the filebeat.yml file to the conf.d directory
-COPY ${DIR}/services/filebeat/filebeat.yml /usr/share/filebeat/filebeat.yml
-COPY ${DIR}/services/filebeat/modules.d /usr/share/filebeat/modules.d/
+COPY filebeat.yml /usr/share/filebeat/filebeat.yml
+COPY modules.d/ /usr/share/filebeat/modules.d/
 
 # Debug step: List files to ensure the correct paths
 RUN ls -l /usr/share/filebeat/
