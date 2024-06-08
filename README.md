@@ -27,7 +27,7 @@ docker-compose -f docker-compose.dvwa.yaml up -d
 
    First, clone the repository to your local machine using the following command:
    ```
-   git clone https://github.com/sarahalh/EDS.git
+   git clone https://github.com/jawaracloud/ensemble-defense-system.git
    ```
 
 2. Copy the `.env.example` file to `.env`:
