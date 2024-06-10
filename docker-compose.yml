@@ -86,7 +86,6 @@ services:
       - LOG_DIR=/var/log/ids
       - TRUSTED_NET=["192.168.0.0/16","10.0.0.0/8","172.16.0.0/12"]
     volumes:
-      - ./services/filebeat/kibana/:/usr/share/filebeat/kibana/:ro
       - ${IDS_LOG_DIR}/:/var/log/ids/:z
     networks:
       - elk
