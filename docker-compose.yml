@@ -30,12 +30,13 @@ services:
   #  ZEEK
   #######################################################
   zeek:
-    build:
-      context: ./services
-      dockerfile: ./zeek/Dockerfile
+    image: zeek/zeek:6.0
+    # build:
+    #   context: ./services
+    #   dockerfile: ./zeek/Dockerfile
     container_name: zeek
     restart: always
-    command: -i ${INTERFACE}
+    command: zeek -C -i ${INTERFACE}
     cap_add:
       - NET_ADMIN
     volumes:
