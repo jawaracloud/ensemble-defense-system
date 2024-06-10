@@ -6,13 +6,7 @@
 
 const log_dir = "/usr/local/zeek/logs";
 
-event zeek_init()
-{
-    for ( id in Log::active_streams )
-    {
-        Log::set_default_path(id, fmt("%s/%s", log_dir, Log::id_to_name(id)));
-    }
-}
+redef Log::default_rotation_dir = log_dir;
 redef Log::default_rotation_interval = 1 day;
 # Installation-wide salt value that is used in some digest hashes, e.g., for
 # the creation of file IDs. Please change this to a hard to guess value.
