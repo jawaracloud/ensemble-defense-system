@@ -4,9 +4,7 @@
 @load base/frameworks/logging/main
 @load policy/tuning/json-logs
 
-const log_dir = "/usr/local/zeek/logs";
-
-redef Log::default_rotation_dir = log_dir;
+redef Log::default_logdir = "/usr/local/zeek/logs";
 redef Log::default_rotation_interval = 1 day;
 # Installation-wide salt value that is used in some digest hashes, e.g., for
 # the creation of file IDs. Please change this to a hard to guess value.
