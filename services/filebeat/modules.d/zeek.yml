@@ -41,3 +41,6 @@
   x509:
     enabled: true
     paths: ["${LOG_DIR}/zeek/x509.log"]
+  packet_filter:
+    enabled: true
+    paths: ["${LOG_DIR}/zeek/packet_filter.log"]
