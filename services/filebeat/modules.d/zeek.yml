@@ -1,43 +1,43 @@
 - module: zeek
   capture_loss:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/capture_loss.log"]
+    paths: ["${LOG_DIR}/zeek/capture_loss.log"]
   connection:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/conn.log"]
+    paths: ["${LOG_DIR}/zeek/conn.log"]
   dhcp:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/dhcp.log"]
+    paths: ["${LOG_DIR}/zeek/dhcp.log"]
   dns:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/dns.log"]
+    paths: ["${LOG_DIR}/zeek/dns.log"]
   files:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/files.log"]
+    paths: ["${LOG_DIR}/zeek/files.log"]
   http:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/http.log"]
+    paths: ["${LOG_DIR}/zeek/http.log"]
   notice:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/notice.log"]
+    paths: ["${LOG_DIR}/zeek/notice.log"]
   ntp:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/ntp.log"]
+    paths: ["${LOG_DIR}/zeek/ntp.log"]
   sip:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/sip.log"]
+    paths: ["${LOG_DIR}/zeek/sip.log"]
   ssh:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/ssh.log"]
+    paths: ["${LOG_DIR}/zeek/ssh.log"]
   ssl:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/ssl.log"]
+    paths: ["${LOG_DIR}/zeek/ssl.log"]
   stats:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/stats.log"]
+    paths: ["${LOG_DIR}/zeek/stats.log"]
   weird:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/weird.log"]
+    paths: ["${LOG_DIR}/zeek/weird.log"]
   x509:
     enabled: true
-    paths: ["${LOG_DIR}/zeek/current/x509.log"]
+    paths: ["${LOG_DIR}/zeek/x509.log"]

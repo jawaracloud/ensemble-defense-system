@@ -1,7 +1,7 @@
 ##! Local site policy. Customize as appropriate.
 ##!
 ##! This file will not be overwritten when upgrading or reinstalling!
-
+@load base/frameworks/logging/main
 # Installation-wide salt value that is used in some digest hashes, e.g., for
 # the creation of file IDs. Please change this to a hard to guess value.
 redef digest_salt = "Qm9zaUJyb01vbmV5VGFja3MyMDE5NTQ=";
